@@ -1,5 +1,11 @@
 import { db } from 'src/lib/db'
 import { UserInputError } from '@redwoodjs/api'
+import { requireAuth } from 'src/lib/auth'
+
+// Used when the environment variable REDWOOD_SECURE_SERVICES=1
+export const beforeResolver = (rules) => {
+  rules.add(requireAuth)
+}
 
 const validate = (input) => {
   if (input.email && !input.email.match(/[^@]+@[^.]+\..+/)) {
